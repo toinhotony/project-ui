@@ -6,7 +6,6 @@ const INITIAL_STATE = {
 }
 
 export const reducerUsers = (state = INITIAL_STATE, action) => {
-    //FIXME TOINHO : OBS
     switch(action.type) {
         case CLEAR:
             return {...state, user: {name:'', cpf :''}}

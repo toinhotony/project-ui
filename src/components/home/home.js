@@ -7,13 +7,14 @@ import UserList from '../user/userList';
 
 const Home = props => {
         return (
-            <div className="content container-fluid user__bloc">
+            <home className="content container-fluid user__bloc">
                 <div className="p-3 mt-3">
                     <UserUpload />
                     <UserForm />
                     <UserList />
                 </div>
-            </div>
+            </home>
         )
 }
+
 export default Home;

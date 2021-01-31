@@ -1,6 +1,5 @@
 import React from 'react';
 import UserDetail from "../userDetail";
-import {deleteUser, selectUser} from "../userService/actions";
 
 const UserList = props => {
 
@@ -13,11 +12,11 @@ const UserList = props => {
     return (
         <table className="table mt-4">
             <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Cpf</th>
-                <th>Ações</th>
-            </tr>
+                <tr>
+                    <th>Name</th>
+                    <th>Cpf</th>
+                    <th>Actions</th>
+                </tr>
             </thead>
             <tbody>
                 { renderRows(props.list) }

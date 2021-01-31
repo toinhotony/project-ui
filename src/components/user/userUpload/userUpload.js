@@ -13,17 +13,20 @@ const UserUpload = props =>  {
     };
 
     return (
-        <>
+        <div>
             <div className="main__bloc">
-                <div>
+                <div className="captureArchive">
                     <input type="file" onChange={handleUploadFile} accept="application/txt" />
                 </div>
                 <div>
-                    <button onClick={addNewCard}> Processar </button>
+                    <button className="btn btn-primary btnUpload" onClick={addNewCard}>
+                        <i className="fa fa-upload"></i> Upload
+                    </button>
                 </div>
+                
             </div>
-
-        </>
+            <hr />
+        </div>
     )
 }  
 

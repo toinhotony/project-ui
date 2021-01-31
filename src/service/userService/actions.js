@@ -1,7 +1,9 @@
 import axios from 'axios'
 
-import {ACTIONS_SERVICE, CLEAR, CPF_CHANGED, FIND_ALL_USERS, NAME_CHANGED} from "./actionType";
-import {CONFIG} from "../../../constants/constants";
+import {ACTIONS_SERVICE, CLEAR, CPF_CHANGED, NAME_CHANGED, ERROR_API} from "./actionType";
+import {CONFIG} from "../../constants/constants";
+import {showMessage} from "../messageService/actions";
+import {MESSAGE_TYPES} from "../messageService/messageType";
 
 
 export const clearForm = () => ({
@@ -31,7 +33,6 @@ export const selectUser = (idUser) => ({
     payload: idUser,
 })
 
-//FIXME TOINHO : OBS verificar possibilidade de erro
 export const save = (user) => {
    return dispatch => {
        axios.post(CONFIG.BASE_URL, user)
@@ -39,12 +40,16 @@ export const save = (user) => {
                type: ACTIONS_SERVICE.SAVE,
                payload : resp.data
            }))
+           .then(resp=> dispatch(showMessage('User created!', MESSAGE_TYPES.SUCCESS)))
            .then(resp=> dispatch(clearForm))
            .then(resp=> dispatch(findAll()))
+           .catch(error => { dispatch(
+            showMessage(error.response.data.message, MESSAGE_TYPES.ERROR)
+            )
+        })
    }
 }
 
-//FIXME TOINHO : OBS verificar possibilidade de erro
 export const update = (user) => {
     return dispatch => {
         axios.put(`${CONFIG.BASE_URL}/${user.id}`, user)
@@ -52,23 +57,31 @@ export const update = (user) => {
                 type: ACTIONS_SERVICE.UPDATE,
                 payload : resp.data
             }))
+            .then(resp=> dispatch(showMessage('User updated!', MESSAGE_TYPES.SUCCESS)))
             .then(resp=> dispatch(clearForm))
             .then(resp=> dispatch(findAll()))
+            .catch(error => { dispatch(
+                showMessage(error.response.data.message, MESSAGE_TYPES.ERROR)
+            )
+            })
     }
 }
 
-//FIXME TOINHO : OBS verificar possibilidade de erro
 export const deleteUser = (id) => {
     return dispatch => {
         axios.delete(`${CONFIG.BASE_URL}/${id}`)
             .then(resp=> dispatch({
                 type: ACTIONS_SERVICE.REMOVE,
             }))
+            .then(resp=> dispatch(showMessage('User deleted!', MESSAGE_TYPES.SUCCESS)))
             .then(resp=> dispatch(findAll()))
+            .catch(error => { dispatch(
+                showMessage(error.response.data.message, MESSAGE_TYPES.ERROR)
+            )
+            })
     }
 }
 
-//FIXME TOINHO : OBS verificar possibilidade de erro
 export const importFile = (data) => {
     return dispatch => {
         axios.post(`${CONFIG.BASE_URL}/import`, data)
@@ -76,6 +89,11 @@ export const importFile = (data) => {
                 type: ACTIONS_SERVICE.IMPORT,
                 payload : resp.data
             }))
+            .then(resp=> dispatch(showMessage('File successfully imported!', MESSAGE_TYPES.SUCCESS)))
             .then(resp=> dispatch(findAll()))
+            .catch(error => { dispatch(
+                showMessage(error.response.data.message, MESSAGE_TYPES.ERROR)
+            )
+            })
     }
 }

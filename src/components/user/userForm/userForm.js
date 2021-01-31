@@ -1,7 +1,8 @@
 import React, {useEffect, useRef} from 'react';
+import Message from "../../message";
 
 const UserForm = props => {
-    const {save, update, user, changeName, changeCpf, clearForm } = props;
+    const {save, update, user, changeName, changeCpf, clearForm, messageText, openDialog, severity } = props;
     const isInitialMount = useRef(true);
 
     useEffect(()=> {
@@ -12,7 +13,6 @@ const UserForm = props => {
     });
 
     const saveUser = user => {
-        console.log('VERIFICANDO', user)
         if (!user.id) {
             save(user);
         } else {
@@ -22,24 +22,25 @@ const UserForm = props => {
 
     return (
         <div className="form">
-            <div className="row">
+            
+            <Message openDialog={openDialog} messageText={messageText} severity={severity} />
 
-                    { user.id &&
-                        <div className="col-12 col-md-6">
-                            <div className="form-group">
-                                <label>Id</label>
-                                <input type="text" className="form-control"
-                                       name="id"
-                                       value={ user.id }
-                                       disabled
-                                />
-                            </div>
+            <div className="row">
+                { user.id &&
+                    <div className="col-12 col-md-6">
+                        <div className="form-group">
+                            <label>Id</label>
+                            <input type="text" className="form-control"
+                                    name="id"
+                                    value={ user.id }
+                                    disabled />
                         </div>
-                    }
+                    </div>
+                }
 
                 <div className="col-12 col-md-6">
                     <div className="form-group">
-                        <label>Nome</label>
+                        <label>Name</label>
                         <input type="text" className="form-control"
                                name="name"
                                value={ user.name }
@@ -62,14 +63,12 @@ const UserForm = props => {
             <div className="row">
                 <div className="col-12 d-flex justify-content-end">
                     <button className="btn btn-primary"
-                             onClick={() => saveUser(user)}
-                        >
-                        Salvar
+                             onClick={() => saveUser(user)}>
+                        Save
                     </button>
                     <button className="btn btn-secondary ml-2"
-                            onClick={ clearForm }
-                    >
-                        Cancelar
+                            onClick={ clearForm }>
+                        Cancel
                     </button>
                 </div>
             </div>

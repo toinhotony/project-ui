@@ -10,4 +10,3 @@ export const ACTIONS_SERVICE = {
 export const NAME_CHANGED = 'NAME_CHANGED';
 export const CPF_CHANGED = 'CPF_CHANGED';
 export const CLEAR = 'CLEAR';
-export const FIND_ALL_USERS = 'FIND_ALL_USERS';
